@@ -9,6 +9,7 @@ const bookshelf = require('./routes/api/bookshelf');
 const bookshelfOffline = require('./routes/api/offline/bookshelfOffline');
 const google = require('./routes/api/google');
 const googleOffline = require('./routes/api/offline/googleOffline');
+const library = require('./routes/api/library')
 
 const app = express();
 // configure app to use bodyParser()
@@ -48,6 +49,7 @@ if (env === 'offline') {
     app.use('/api/bookshelf', bookshelf);
     app.use('/api/amazon', amazon);
     app.use('/api/google', google);
+    app.use('/api/library', library);
   }
   const port = process.env.PORT || 5000;
 

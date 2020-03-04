@@ -19,7 +19,7 @@ router.post('/v2', (req, res) => {
   axios.get(url).then(async html => {
     const $ = await cheerio.load(html.data)
 
-    const keywordSelector = `a[href*="keywords=${isbn}"]`;
+    //const keywordSelector = `a[href*="keywords=${isbn}"]`;
     const book = {
       amazonAverageRating: parseFloat(
         $('span[data-a-popover*="average-customer-review"]')
