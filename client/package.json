@@ -10,6 +10,22 @@
 		"test:watch": "react-scripts test --watch --verbose=false",
 		"test:coverage": "react-scripts test --coverage --colors --watchAll=true"
 	},
+	"jest": {
+		"collectCoverageFrom": [
+			"src/**/*.{js,jsx,ts,tsx}"
+		],
+		"coveragePathIgnorePatterns": [
+			"<rootDir>/node_modules",
+			"<rootDir>/src/setupTests.js",
+			"<rootDir>/src/setupProxy.js",
+			"<rootDir>/src/index.js",
+			"<rootDir>/src/App/header/Header.js",
+			"<rootDir>/src/config/",
+			"<rootDir>/src/util/constants.js",
+			"<rootDir>/src/store/configureStore.js",
+			"<rootDir>/src/store/index.js"
+		]
+	},
 	"browserslist": {
 		"production": [
 			">0.2%",
