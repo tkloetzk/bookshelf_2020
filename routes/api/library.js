@@ -7,14 +7,8 @@ const endpointUrl = 'https://gateway.bibliocommons.com/v2/libraries/hclib/bibs/s
 
 router.get('/v1/availability/:isbn', async (req, res) => {
   const isbn = get(req.params, 'isbn');
-
-  const response = await axios.get(endpointUrl, {
-    params: {
-      query: `identifier%3A%28${isbn}%29`,
-      searchType: "bl",
-    }
-  })
-
+  
+  const response = await axios.get(`${endpointUrl}%3F&query=identifier%3A(${isbn})&searchType=bl`)
   res.send({ book: Object.values(get(response.data, 'entities.bibs', {}))})
 })
 
@@ -27,7 +21,12 @@ router.post('/v1/search/:query', async (req, res) => {
     view: "grouped",
   })
 
-  res.send({ data: response.data})
+  res.send({ 
+    data: {
+      books: Object.values(get(response.data, 'entities.bibs', {})),
+      pagination: response.data.catalogSearch.pagination
+    }
+  })
 })
 
 module.exports = router;

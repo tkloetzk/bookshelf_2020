@@ -42,7 +42,7 @@ if (env === 'offline') {
   } else {
     console.info(`not offline. using ${dbName} bookshelf`);
     mongoose
-      .connect(db, { useNewUrlParser: true })
+      .connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
       .then(() => console.info('MongoDB Connected'))
       .catch(err => console.error('server', err));
   

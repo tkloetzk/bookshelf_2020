@@ -30,6 +30,10 @@
 		"random-words": "^1.1.0",
 		"react": "^16.13.0",
 		"react-dom": "^16.13.0",
-		"react-scripts": "3.4.0"
+		"react-scripts": "3.4.0",
+		"redux-thunk": "^2.3.0"
+	},
+	"devDependencies": {
+		"redux-devtools-extension": "^2.13.8"
 	}
 }

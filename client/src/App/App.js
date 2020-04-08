@@ -1,3 +1,4 @@
+import Bookshelf from './Bookshelf/Bookshelf'
 import Header from './header/Header'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState } from 'react'
@@ -6,9 +7,9 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 
 const useStyles = makeStyles(theme => ({
-    // tabs: {
-    //   background: theme.palette.primary.gray,
-    // },
+    tabs: {
+      background: theme.palette.primary.gray,
+    },
     container: {
       marginTop: 103,
     },
@@ -27,7 +28,7 @@ export default function App() {
                 indicatorColor="primary"
                 textColor="primary"
                 variant="fullWidth"
-                //className={classes.tabs}
+                className={classes.tabs}
                 >
                 <Tab
                     label="Search"
@@ -40,7 +41,7 @@ export default function App() {
                 </Tabs>
                 <SwipeableViews index={index} onChangeIndex={setIndex}>
                     <div>0</div>
-                    <div>1</div>
+                    <Bookshelf />
                 </SwipeableViews>
             </div>
         </>
