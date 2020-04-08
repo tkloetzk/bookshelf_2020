@@ -11,3 +11,5 @@ client/coverage
 
 # production
 /build
+
+client/reports/
