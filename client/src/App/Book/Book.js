@@ -1,5 +1,6 @@
 import React from 'react'
-import { Card, CardContent, CardMedia, Typography } from '@material-ui/core'
+import { Card, CardContent, CardMedia, IconButton, Typography } from '@material-ui/core'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -12,6 +13,14 @@ const useStyles = makeStyles(theme => ({
       textAlign: 'center',
       margin: '13px',
     },
+    title: {
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(1.2),
+      paddingRight: theme.spacing(1.2),
+    },
+    flexGrow: {
+      flexGrow: 1,
+    },
     media: {
       width: '33%',
       paddingTop: '16px',
@@ -20,6 +29,18 @@ const useStyles = makeStyles(theme => ({
     description: {
         height: '153px',
         overflow: 'auto',
+      },
+      expand: {
+        transform: 'rotate(0deg)',
+      },
+      // expandAction: {
+      //   padding: 0,
+      // },
+      // expanded: {
+      //   maxHeight: 574,
+      // },
+      expandOpen: {
+        transform: 'rotate(180deg)',
       },
 }))
 
@@ -46,8 +67,9 @@ function Book(props) {
 }
 
 function Title({title}) {
+  const classes = useStyles()
     return  (
-    <Typography variant="body2" align="center">
+    <Typography variant="body2" align="center" className={[classes.flexGrow, classes.title].join(' ')}>
         {title}
     </Typography>)
 }
@@ -57,6 +79,7 @@ function Cover({image}) {
 
   return ( <CardMedia
     classes={{ media: classes.media }}
+    className={classes.flexGrow}
     component="img"
     image={image || ' '}
   />)
@@ -65,20 +88,45 @@ function Cover({image}) {
 function Description({ description }) {
     const classes = useStyles()
 
-    return (<CardContent>
-      <Typography
-        variant="caption"
-        color="textSecondary"
-        component="p"
-        className={classes.description}
-      >
-        {description}
-      </Typography>
-    </CardContent>)
+    return (
+      <CardContent className={classes.flexGrow}>
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          component="p"
+          className={classes.description}
+        >
+          {description}
+        </Typography>
+      </CardContent>
+    )
+}
+
+function Expandable({}) {
+  const classes = useStyles()
+  const [expanded, setExpanded] = React.useState(false)
+
+  function handleExpandClick() {
+    setExpanded(!expanded)
+  }
+
+  return (
+    <>
+    <IconButton
+      data-testid="expandButton"
+      onClick={handleExpandClick}
+      className={expanded ? classes.expandOpen : classes.expand}
+    >
+      <ExpandMoreIcon />
+    </IconButton>
+    {/* {children} */}
+    </>
+  )
 }
 
 Book.Title = Title
 Book.Cover = Cover
 Book.Description = Description
+Book.Expandable = Expandable
 
 export default Book

@@ -5,6 +5,8 @@ import {fireEvent} from '@testing-library/react'
 import App from '../App'
 //import '@testing-library/jest-dom/extend-expect'
 
+jest.mock('../Bookshelf/Bookshelf', () => () => (<div>Bookshelf Page</div>));
+
 test.only('renders correctly and changes tabs', async () => {
     const { queryByText, queryAllByRole, debug, queryByTestId} = render(<App />)
     const header = queryByText('Book Review Aggregator')
@@ -25,6 +27,11 @@ test.only('renders correctly and changes tabs', async () => {
     bookshelfTab = await queryAllByRole('tab')[1]
     fireEvent.click(bookshelfTab)
     
-    // Verify we're on the bookshelf tab
+    const bookshelfPage = queryByText('Bookshelf Page')
+    expect(bookshelfPage).not.toBeNull()
 
+    // fireEvent.click(searchTab)
+
+    // const searchPage = queryByText('Bookshelf Page')
+    // expect(bookshelfPage).not.toBeNull()
 })

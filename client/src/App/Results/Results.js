@@ -9,6 +9,9 @@ const Results = ({ booklist }) => (
                 <Book.Title title={book.title} />
                 <Book.Cover image={book.thumbnail} />
                 <Book.Description description={book.description} />
+                <Book.Expandable>
+                    
+                </Book.Expandable>
             </Book>
         ))}
     </Grid>
