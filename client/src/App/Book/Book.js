@@ -1,12 +1,12 @@
-import React from 'react'
-import { Card, CardContent, CardMedia, IconButton, Typography } from '@material-ui/core'
+import React, { useState, useContext } from 'react'
+import { Card, CardContent, CardMedia, Collapse, IconButton, Typography } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     card: {
       width: 235,
-      maxHeight: 459,
+      maxHeight: 421,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -33,33 +33,27 @@ const useStyles = makeStyles(theme => ({
       expand: {
         transform: 'rotate(0deg)',
       },
-      // expandAction: {
-      //   padding: 0,
-      // },
-      // expanded: {
-      //   maxHeight: 574,
-      // },
+      expanded: {
+        maxHeight: 574,
+      },
       expandOpen: {
         transform: 'rotate(180deg)',
       },
 }))
 
-const BookContext = React.createContext()
+const BookContext = React.createContext({ expanded: false, setExpanded: () => {}})
 
-function Book(props) {
+function Book({ children }) {
     const classes = useStyles()
 
+    const [expanded, setExpanded] = useState(false)
+
     return (
-        <BookContext.Provider>
+        <BookContext.Provider value={{ expanded, setExpanded }}>
             <Card
-                className={classes.card}
-                // className={[
-                //     classes.card,
-                //     expanded ? classes.expanded : null,
-                //     differences.length ? classes.different : null,
-                // ].join(' ')}
+                className={[classes.card, expanded ? classes.expanded: null].join(' ')}
                 >
-                {props.children}
+                {children}
             </Card>
             
         </BookContext.Provider>
@@ -102,25 +96,33 @@ function Description({ description }) {
     )
 }
 
-function Expandable({}) {
+function Expandable({ children }) {
   const classes = useStyles()
-  const [expanded, setExpanded] = React.useState(false)
-
-  function handleExpandClick() {
-    setExpanded(!expanded)
-  }
+  const { expanded, setExpanded } = useContext(BookContext)
 
   return (
-    <>
-    <IconButton
-      data-testid="expandButton"
-      onClick={handleExpandClick}
-      className={expanded ? classes.expandOpen : classes.expand}
-    >
-      <ExpandMoreIcon />
-    </IconButton>
-    {/* {children} */}
-    </>
+      <>
+        <IconButton
+          data-testid="expandButton"
+          onClick={() => setExpanded(!expanded)}
+          className={expanded ? classes.expandOpen : classes.expand}
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            {children}
+          </CardContent>
+        </Collapse>
+      </>
+  )
+}
+
+function Ratings({ text, rating}) {
+  return (
+    <Typography variant="caption" component="div">
+      {text} {rating}
+    </Typography>
   )
 }
 
@@ -128,5 +130,6 @@ Book.Title = Title
 Book.Cover = Cover
 Book.Description = Description
 Book.Expandable = Expandable
+Book.Ratings = Ratings
 
 export default Book

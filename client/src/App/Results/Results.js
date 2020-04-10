@@ -10,7 +10,10 @@ const Results = ({ booklist }) => (
                 <Book.Cover image={book.thumbnail} />
                 <Book.Description description={book.description} />
                 <Book.Expandable>
-                    
+                    <Book.Ratings text="Amazon Rating:" rating={book.amazonAverageRating} />
+                    <Book.Ratings text="Goodreads Rating:" rating={book.goodreadsAverageRating} />
+                    <Book.Ratings text="Amazon Review:" rating={book.amazonRatingsCount} />
+                    <Book.Ratings text="Goodreads Review:" rating={book.goodreadsRatingsCount} />
                 </Book.Expandable>
             </Book>
         ))}
